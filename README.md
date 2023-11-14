@@ -200,10 +200,3 @@ df1
 
 # RESULT
 The given datasets are read and outliers are detected and are removed using IQR and z-score methods.
-
-### BOXPLOT AFTER REMOVING WEIGHT OUTLIERS
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/311415ad-901b-4460-9564-968a08877d92)
-
-
-# RESULT: 
-  The given datasets are read and outliers are detected and are removed using IQR and z-score methods.

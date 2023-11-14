@@ -1,5 +1,5 @@
-# Ex:2 - Outlier_Detection_and_Removal
-# AIM:
+# Ex02-Outlier Detection And Removal
+
 You are given bhp.csv which contains property prices in the city of banglore, India. You need to examine price_per_sqft column and do following,
 
 (1) Remove outliers using IQR
@@ -14,179 +14,192 @@ You are given bhp.csv which contains property prices in the city of banglore, In
 
 (ii) Using IQR, detect height outliers and print them
 
-# ALGORITHM:
-STEP 1:
-Read the given Data.
+# Aim:
+TO detect and remove the outliers in the given data set and save the final data.
 
-STEP 2:
-Get the information about the data.
+# EXPLANATION
+An Outlier is an observation in a given dataset that lies far from the rest of the observations. That means an outlier is vastly larger or smaller than the remaining values in the set. An outlier is an observation of a data point that lies an abnormal distance from other values in a given population. (odd man out).Outliers badly affect mean and standard deviation of the dataset. These may statistically give erroneous results.Most machine learning algorithms do not work well in the presence of outlier. So it is desirable to detect and remove outliers.Outliers are highly useful in anomaly detection like fraud detection where the fraud transactions are very different from normal transactions.
 
-STEP 3:
-Detect the Outliers using IQR method and Z score.
+# ALGORITHM
 
-STEP 4:
-Remove the outliers:
+STEP 1
+Read the given Data
 
-STEP 5:
-Plot the datas using box plot.
+STEP 2
+Get the information about the data
 
-# PROGRAM:
-~~~
+STEP 3
+Detect the Outliers using IQR method and Z score
+
+STEP 4
+Remove the outliers
+
+# CODE AND OUTPUT
+
+CODE and OUTPUT:
+```
 import pandas as pd
-df=pd.read_csv("/content/bhp.csv")
-df.head()
-df.describe()
-df.info()
-df.shape
-
 import seaborn as sns
-sns.boxplot(x="price_per_sqft",data=df)
-~~~
-# removing ouliers of bhp.csv file using IQR
-~~~
-Q1=df['price_per_sqft'].quantile(0.25)
-Q3=df['price_per_sqft'].quantile(0.75)
-IQR=Q3-Q1
-lower=Q1-1.5*IQR
-upper=Q3+1.5*IQR
-newdata=df[(df['price_per_sqft']>=lower) & (df['price_per_sqft']<=upper)] 
-print(newdata)   #new dataframe.
-outliers=df[(df['price_per_sqft']<lower) | (df['price_per_sqft']>upper)]
-print(outliers)
-newdata.shape
-sns.boxplot(x="price_per_sqft",data=newdata)
-~~~
-# removing ouliers of bhp.csv file using Zscore of 3
-~~~
 from scipy import stats
 import numpy as np
-z_score=np.abs(stats.zscore(df['price_per_sqft']))
-newdata2=df[(z_score<3)]
-print(newdata2)
-outlier2=df[(z_score>=3)]
-print(outlier2)
-newdata2.shape
-sns.boxplot(x="price_per_sqft",data=newdata2)
-
-import pandas as pd
-dataset=pd.read_csv("/content/height_weight.csv")
-dataset.shape
-dataset.describe()
-dataset.info()
-import seaborn as sns
-sns.boxplot(x='height',data=dataset)
-# Using IQR detect height outliers and print them( height_weight.csv)
-Q1_height=dataset['height'].quantile(0.25)
-Q3_height=dataset['height'].quantile(0.75)
-IQR_HEIGHT=Q3_height-Q1_height
-l_height=Q1_height-1.5*IQR_HEIGHT
-u_height=Q3_height+1.5*IQR_HEIGHT
-outliers_height=dataset[(dataset['height']<l_height) | (dataset['height']>u_height)]
-print(outliers_height)
-newdata_height=dataset[(dataset['height']>=l_height) & (dataset['height']<=u_height)]
-print(newdata_height)
-sns.boxplot(x='height',data=newdata_height)
-~~~
-# Using IQR, detect weight outliers and print them( height_weight.csv)
-~~~
-Q1_weight=dataset['weight'].quantile(0.25)
-Q3_weight=dataset['weight'].quantile(0.75)
-IQR_WEIGHT=Q3_weight-Q1_weight
-l_weight=Q1_weight-1.5*IQR_WEIGHT
-u_weight=Q3_weight+1.5*IQR_WEIGHT
-outliers_weight=dataset[(dataset['weight']<l_weight) | (dataset['weight']>u_weight)]
-print(outliers_weight)
-newdata_weight=dataset[(dataset['weight']>=l_weight) & (dataset['weight']<=u_weight)]
-print(newdata_weight)
-sns.boxplot(x='weight',data=newdata_weight)
-~~~
-# OUTPUT:
-## bhp.csv:
-### df.head():
-i![image](https://github.com/Poojariyaa/Outlier/assets/127511817/13a055a7-5a94-42a0-9bf0-aa9c63cd0697)
+```
+```
+from google.colab import files
+uploaded = files.upload()
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/4906cc2b-678d-4185-ab0a-d089e16e75b9)
+```
+df = pd.read_csv("bhp.csv")
+q1 = df['price_per_sqft'].quantile(0.25)
+q2 = df['price_per_sqft'].quantile(0.5)
+q3 = df['price_per_sqft'].quantile(0.75)
+iqr = q3-q1
+iqr
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/f30f6568-991d-4048-b244-3fbcdcb937ab)
+```
+low = q1-1.5*iqr
+low
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/254e7703-ae3a-46e6-960a-9b37a21b3535)
+```
+high = q3+1.5*iqr
+high
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/4ac387cd-b9e6-4785-8464-66869f6f6ef7)
+```
+df = df[((df['price_per_sqft']>=low) & (df['price_per_sqft']<=high))]
+df
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/4152d83f-5aef-4c1a-8092-e76536ebd0ce)
+```
+z = np.abs(stats.zscore(df['price_per_sqft']))
+z
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/a0da48ac-99fe-4e6c-9b8b-b39c5d8121a8)
+```
+df1 = df[z<3]
+df1
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/3fef3a7c-8551-43c0-80d7-5a2188e00a5c)
 
 
-### df.describe():
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/5fdb5cca-b47b-4155-9638-692da87f29ba)
+```
+from google.colab import files
+uploaded = files.upload()
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/883c893f-2e8b-4b3f-b4dc-77307ed980a8)
+```
+df = pd.read_csv("height_weight.csv")
+q1 = df['height'].quantile(0.25)
+q2 = df['height'].quantile(0.5)
+q3 = df['height'].quantile(0.75)
+iqr = q3-q1
+iqr
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/0eeee5cc-a508-4252-92df-59880e59de13)
+```
+low = q1 - 1.5*iqr
+low
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/8b1eeea4-5908-4568-86be-c2127de0797f)
+```
+high = q3+1.5*iqr
+high
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/26ab4343-bd7e-4331-b1dd-af96823456a3)
+```
+df = df[((df['height'] >=low) & (df['height']<= high))]
+df
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/bcb2a88f-eba1-4b59-8d19-2e88130b13e1)
+```
+z = np.abs(stats.zscore(df['height']))
+z
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/d7160f8d-1321-46dc-9051-961dd9cb40eb)
+```
+df1 = df[z<3]
+df1
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/afb8af88-3aa2-4d96-889d-26b9eba19149)
+```
+df = pd.read_csv("height_weight.csv")
+q1 = df['weight'].quantile(0.25)
+q2 = df['weight'].quantile(0.5)
+q3 = df['weight'].quantile(0.75)
+iqr = q3-q1
+iqr
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/222beeb7-a893-4793-b96e-7e42294934d7)
+```
+low = q1 - 1.5*iqr
+low
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/8b66b76e-f387-4e40-b594-ac6ca0a4284a)
+```
+high = q3 + 1.5*iqr
+high
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/bbe28186-2247-4005-a89f-064c994354ad)
+```
+df1 = df[((df['weight'] >=low) & (df['weight']<= high))]
+df1
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/7653872e-b6da-4b22-a613-24a5b54f464c)
+```
+z = np.abs(stats.zscore(df1['weight']))
+z
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/de553057-bd66-4348-8cfe-0f4a305ca42b)
+```
+df2 = df1[z<3]
+df2
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/ea3cd452-e6f1-424d-ae10-5e0304850dd5)
 
+```
+from google.colab import files
+uploaded = files.upload()
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/2f364b31-ca6a-410a-940f-e152c6237c11)
+```
+df = pd.read_csv("heights.csv")
+q1 = df['height'].quantile(0.25)
+q2 = df['height'].quantile(0.5)
+q3 = df['height'].quantile(0.75)
+iqr = q3-q1
+iqr
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/31e84543-2e24-4ac6-babf-3b897de05fef)
+```
+low = q1 - 1.5*iqr
+low
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/efadafd3-56fd-4d33-93f1-f2faa1fbf207)
+```
+high = q3 + 1.5*iqr
+high
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/42671517-822a-4e56-a9c2-ff36efcdf1a3)
+```
+df1 = df[((df['height'] >=low)& (df['height'] <=high))]
+df1
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/4533fa2e-bb09-4ced-8042-c89f05f01914)
+```
+z = np.abs(stats.zscore(df['height']))
+z
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/29d6abf2-8194-4cba-820d-016360331e79)
+```
+df1 = df[z<3]
+df1
+```
+![image](https://github.com/Vaish-1011/ODD2023---Datascience---Ex-02/assets/135130074/ef493174-a3ca-44fc-89ad-1889d4670f47)
 
-### df.info():
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/a1b569d6-3690-494c-927a-5d6316383dbc)
-
-
-### df.shape
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/1b3dbf7a-0a41-4768-91a7-0e6f767645a2)
-
-
-### BOXPLOT BEFORE REMOVING OUTLIERS
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/fadced04-7f6d-434f-b466-18b0485310cf)
-
-
-### NEWDATA USING IQR
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/540213ae-9f0b-4f92-bd71-fa70ea0aba63)
-
-
-### OUTLIERS
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/81ac667e-ccfc-4af5-b5ee-ef97711b24ff)
-
-### newdata.shape
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/f4c3b40e-9420-428a-976f-515bf44605e0)
-
-
-### BOXPLOT AFTER REMOVING OUTLIERS USING IQR
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/3bc5ad74-d99b-4591-ab11-c4c446096c28)
-
-
-# Zscore of 3
-### NEWDATA USING Zscore
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/599ae1c0-5ef7-4f43-bfc8-d1169c374d32)
-
-
-### OUTLIERS
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/cd6562de-0c08-4da7-ae02-54e053726ae7)
-
-
-### newdata2.shape
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/206e151b-7d5f-4dab-99b6-3cc46dca3227)
-
-### BOXPLOT AFTER REMOVING OUTLIERS USING Zscore
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/a2d19eac-7994-4cd6-803a-38a8b9e13d32)
-
-
-### height_weight.csv
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/c077d5e2-f578-4aa5-8ebb-f521f8d9fb91)
-
-### dataset.describe()
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/5697b0b4-6c2b-4567-9154-9a7bc406a418)
-
-
-### dataset.info()
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/0655a0b6-c22a-4c8a-98cf-44f295da4717)
-
-
-### BOXPLOT BEFORE REMOVING OUTLIERS
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/b90a2686-e73b-4392-990e-c258d586a10c)
-
-
-### HEIGHT OUTLIERS
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/d7ee8917-1c52-40bf-b32a-56a907b08733)
-
-
-### DATASET AFTER REMOVING HEIGHT OUTLIERS
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/bb83f05b-4fb5-4a36-b198-aab0592426d8)
-
-
-### BOXPLOT AFTER REMOVING HEIGHT OUTLIERS
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/cd2234f2-5fc2-4d30-85d4-267e6d60d254)
-
-
-### WEIGHT OUTLIERS
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/8177ad0b-4ce9-40aa-9f8a-44bf6852fb88)
-
-
-### DATASET AFTER REMOVING WEIGHT OUTLIERS
-![image](https://github.com/Poojariyaa/Outlier/assets/127511817/aa4b9852-f198-4c33-8b59-9d98be545ab0)
-
+# RESULT
+The given datasets are read and outliers are detected and are removed using IQR and z-score methods.
 
 ### BOXPLOT AFTER REMOVING WEIGHT OUTLIERS
 ![image](https://github.com/Poojariyaa/Outlier/assets/127511817/311415ad-901b-4460-9564-968a08877d92)
